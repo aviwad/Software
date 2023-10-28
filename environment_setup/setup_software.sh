@@ -162,16 +162,21 @@ if [[ "$arch" == "aarch64" ]]; then
     sudo apt-get install sip-tools -y
     sudo apt-get install qtchooser -y
     sudo apt-get install qt6-base-dev -y
-    sudo apt-get install qt5-base-dev -y
+    sudo pip3 install PyQt-Builder
     sudo /opt/tbotspython/bin/pip3.8 install PyQt-Builder
     sudo apt install -y qtcreator qtbase5-dev qt5-qmake cmake -y    
     
     wget https://files.pythonhosted.org/packages/34/da/e03b7264b1e88cd553ff62a71c0c19f55690e08928130f4aae613723e535/PyQt6-6.5.2.tar.gz
+    
+    tar -xvzf PyQt6-6.5.2.tar.gz
     cd PyQt6-6.5.2/
     qtchooser -install qt6 $(which qmake6)
     sudo mv ~/.config/qtchooser/qt6.conf /usr/share/qtchooser/qt6.conf
     export QT_SELECT=qt6
-    sudo sip-install --target-dir /opt/tbotspython/lib/python3.8/site-packages/ --verbose
+    sudo su
+    export QT_SELECT=qt6
+    sip-install --target-dir /opt/tbotspython/lib/python3.8/site-packages/ --verbose
+    exit
     sudo /opt/tbotspython/bin/pip3.8 install PyQt6-sip
     export QT_QPA_PLATFORM=wayland
     
